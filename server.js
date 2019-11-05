@@ -43,7 +43,11 @@ app.use((err, req, res, next) => {
     .send(errMessage)
 })
 
-// 
+// My Code
+app.post('/new-user', function (req, res) {
+    res.json(req.body);
+  }) 
+// END My Code
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
