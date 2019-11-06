@@ -4,10 +4,13 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const mongoose = require('mongoose')
-mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track', { useMongoClient: true } )
-  .catch(error => console.error(error))
+mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track', { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+})
+  .catch(error => console.error(error));
 
-app.use(cors())
+app.use(cors());
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
