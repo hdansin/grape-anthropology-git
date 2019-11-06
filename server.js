@@ -39,10 +39,15 @@ app.get("/api/exercise/users", function(req, res) {
 
 // post new user
 app.post("/api/exercise/new-user", function(req, res) {
-  var newUser = req.body;
-  console.log("hey " + req.body);
-  res.json({ username: newUser });
+  var newUser = new userModel({username: req.body.username});
+  newUser.save(function (err, newUser) {
+    if (err) return console.error(err);
+  });
+  console.log("Greetings " + newUser);
+  res.json(newUser);
 });
+
+// post exercise to user
 
 // Not found middleware
 app.use((req, res, next) => {
