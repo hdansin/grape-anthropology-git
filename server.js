@@ -31,13 +31,16 @@ var userModel = mongoose.model("user", userSchema);
 // get all users
 app.get("/api/exercise/users", function(req, res) {
   console.log("requesting users");
-  userModel.find({}, function ())
+  userModel.find({}, function (err, users) {
+    if (err) return console.error(err);
+    res.json(users);
+  });
 });
 
 // post new user
 app.post("/api/exercise/new-user", function(req, res) {
   var newUser = req.body;
-  console.log("hey " + req.body);
+  console.log("hey " + req.body.username);
   res.json({ username: newUser.username });
 });
 
