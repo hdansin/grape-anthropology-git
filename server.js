@@ -44,12 +44,16 @@ app.use((err, req, res, next) => {
     .send(errMessage)
 })
 
-// creat schema and model for mongo docs
+// create schema and model for mongo docs
 var Schema = mongoose.Schema;
 var userSchema = new Schema ({
   username: String
 });
 var userModel = mongoose.model("user", userSchema);
+
+app.get('/api/exercise/users', function (req, res) {
+  console.log("requesting users")
+})
 
 // create new user post
 app.post('/api/exercise/new-user', function (req, res) {
