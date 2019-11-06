@@ -40,8 +40,8 @@ app.get("/api/exercise/users", function(req, res) {
 // post new user
 app.post("/api/exercise/new-user", function(req, res) {
   var newUser = req.body;
-  console.log("hey " + req.body.username);
-  res.json({ username: newUser.username });
+  console.log("hey " + req.body);
+  res.json({ username: newUser });
 });
 
 // Not found middleware
