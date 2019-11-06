@@ -49,11 +49,9 @@ app.post("/api/exercise/new-user", function(req, res) {
 
 // post exercise to user
 app.post("/api/exercise/add", function(req, res) {
-  var newExercise = req.body;
-  console.log("Adding exercise: " + newExercise);
-  let doc = await userModel.findOneAndUpdate(filter, update, {
-    new: true
-  });
+  console.log("Adding exercise: " + req.body);
+  var doc = userModel.findById(req.body._id)
+
 })
 
 // Not found middleware
