@@ -54,8 +54,9 @@ var userModel = mongoose.model("user", userSchema);
 // create new user post
 app.post('/api/exercise/new-user', function (req, res) {
     var newUser = req.body;
+    console.log("hey " + req.body);
     res.json({ username: newUser.username });
-  }) 
+});
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
