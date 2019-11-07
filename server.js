@@ -25,7 +25,8 @@ app.get("/", (req, res) => {
 var Schema = mongoose.Schema;
 var userSchema = new Schema({
   username: String,
-  exerciseLog: Array
+  exerciseLog: Array,
+  exerciseCount: Number
 });
 var userModel = mongoose.model("user", userSchema);
 
