@@ -52,7 +52,8 @@ app.post("/api/exercise/new-user", function(req, res) {
 // post exercise to user
 app.post("/api/exercise/add", function(req, res) {
   console.log("Adding exercise: " + req.body);
-  var doc = userModel.findById(req.body._id)
+  var exercise = req.body;
+  var doc = userModel.findById(reqexercise);
 
 })
 
