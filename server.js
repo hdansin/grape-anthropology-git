@@ -66,10 +66,10 @@ app.post("/api/exercise/add", function(req, res) {
         exerciseDate = new Date();
       }
     }
-    var formatDate = 
-    console.log(exerciseDate); // DB
+    var formattedDate = exerciseDate.getMonth().toString() + "-" + exerciseDate.getDate().toString() + "-" + exerciseDate.getFullYear().toString();
+    console.log(formattedDate); // DB
     // construct the exercise to be logged
-    var newExercise = { description: req.body.description, duration: req.body.duration, date: exerciseDate };
+    var newExercise = { description: req.body.description, duration: req.body.duration, date: formattedDate };
     user.exerciseCount = user.exerciseCount + 1;
     user.exerciseLog = user.exerciseLog.push(newExercise);
     res.json({ _id: user._id, username: user.username, description: newExercise.description, duration: newExercise.duration, date: newExercise.date  });
