@@ -50,7 +50,7 @@ app.get("/api/exercise/log?", function(req, res) {
   console.log(to) //DB
   let limit = req.query.limit;
   // find by _id
-  userModel.find({
+  userModel.findOne({
     _id: id
   }, 
   function(err, user) {
@@ -59,10 +59,13 @@ app.get("/api/exercise/log?", function(req, res) {
     // filter exercise log by dates and push into array
     let exerciseArr = [];
     for (exercise in user.exerciseLog) {
-      if (exercise.date.toUTCString() > from && exercise.date.toUTCString() < to) {
+      console.log("from: " + from + " to: " + to)//DB
+      console.log("against: " + user.exerciseLog[exercise])//DB
+      if (user.exerciseLog[exercise.date.toUTCString()] > from && user.exerciseLog[exercise].date.toUTCString() < to) {
         exerciseArr.push(exercise);
       }
     }
+    console.log(exerciseArr)
     res.json({_id: user._id, username: user.username, log: exerciseArr, count: user.exerciseCount });
   });
 });
