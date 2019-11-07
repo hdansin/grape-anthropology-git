@@ -41,7 +41,7 @@ app.get("/api/exercise/users", function(req, res) {
 
 // post new user
 app.post("/api/exercise/new-user", function(req, res) {
-  var newUser = new userModel({username: req.body.username});
+  var newUser = new userModel({username: req.body.username, exerciseLog: [], exerciseCount: 0});
   newUser.save(function (err, newUser) {
     if (err) return console.error(err);
   });
@@ -53,14 +53,12 @@ app.post("/api/exercise/new-user", function(req, res) {
 app.post("/api/exercise/add", function(req, res) {
   console.log("Adding exercise")
   console.dir(req.body);
-  var exercise = req.body;
-  var doc = userModel.findById(exercise._id);
-  console.log(doc);
-  doc.exerciseLog.push({ description: exercise.description, duration: exercise.duration, date: exercise.date })
-  doc.exerciseCount = doc.exerciseCount + 1;
-  res.json(exercise);
-
-
+  userModel.findById(req.body._id, function(err, user) {
+    if (err) return console.error(err);
+    user.exerciseCount = user.exerciseCount + 1;
+    user.exerciseLog = user.exerciseLog.push({ description: req.body.description, duration: req.body.duration, date: req.body.date });
+    res.json(user);
+  })
 
 })
 
