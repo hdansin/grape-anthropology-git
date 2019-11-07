@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const moment = require("moment");
+moment().format();
 
 // Create connection with mongo
 mongoose
@@ -17,7 +18,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
-moment().format();
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
@@ -69,7 +69,8 @@ app.post("/api/exercise/add", function(req, res) {
       }
     }
     var formattedDate = exerciseDate.getMonth().toString() + "-" + exerciseDate.getDate().toString() + "-" + exerciseDate.getFullYear().toString();
-    console.log(moment(exerciseDate)); // DB
+    var momentDate = moment(exerciseDate);
+    console.log(momentDate); // DB
     // construct the exercise to be logged
     var newExercise = { description: req.body.description, duration: req.body.duration, date: formattedDate };
     user.exerciseCount = user.exerciseCount + 1;
