@@ -68,17 +68,16 @@ app.post("/api/exercise/add", function(req, res) {
         exerciseDate = new Date();
       }
     }
-    var formattedDate = exerciseDate.getMonth().toString() + "-" + exerciseDate.getDate().toString() + "-" + exerciseDate.getFullYear().toString();
-    var momentDate = moment(exerciseDate);
+    // format date using moment.js
+    var momentDate = moment(exerciseDate).format("dddd, MMMM Do YYYY, h:mm:ss a");
     console.log(momentDate); // DB
     // construct the exercise to be logged
-    var newExercise = { description: req.body.description, duration: req.body.duration, date: formattedDate };
+    var newExercise = { description: req.body.description, duration: req.body.duration, date: momentDate };
     user.exerciseCount = user.exerciseCount + 1;
     user.exerciseLog = user.exerciseLog.push(newExercise);
     res.json({ _id: user._id, username: user.username, description: newExercise.description, duration: newExercise.duration, date: newExercise.date  });
-  })
-
-})
+  });
+});
 
 // Not found middleware
 app.use((req, res, next) => {
