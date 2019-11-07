@@ -46,9 +46,9 @@ app.get("/api/exercise/log/:userId", function(req, res) {
   let id = req.params.userId;
   userModel.findById(id, function(err, user) {
     if (err) return console.error(err);
-    res.json()
-  })
-})
+    res.json({_id: user._id, username: user.username, log: user.exerciseLog, count: user.exerciseCount });
+  });
+});
 
 // post new user
 app.post("/api/exercise/new-user", function(req, res) {
