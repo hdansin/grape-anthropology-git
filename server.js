@@ -42,9 +42,12 @@ app.get("/api/exercise/users", function(req, res) {
 });
 
 // get exercise log
-app.get("/api/exercise/log/:userId", function(req, res) {
+app.get("/api/exercise/log/:userId:from:to:limit", function(req, res) {
   let id = req.params.userId;
-  userModel.findById(id, function(err, user) {
+  req.params.from ? let from = moment(req.params.from).format("dddd, MMMM Do YYYY, h:mm:ss a");
+  let to = moment(req.params.to).format("dddd, MMMM Do YYYY, h:mm:ss a");
+  let limit = req.params.limit;
+  userModel.find({ _id: id}, function(err, user) {
     if (err) return console.error(err);
     res.json({_id: user._id, username: user.username, log: user.exerciseLog, count: user.exerciseCount });
   });
