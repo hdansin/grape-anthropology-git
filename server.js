@@ -55,6 +55,7 @@ app.post("/api/exercise/add", function(req, res) {
   console.dir(req.body);
   userModel.findById(req.body._id, function(err, user) {
     if (err) return console.error(err);
+    // construct the date
     if (!req.body.date) {
       var exerciseDate = new Date();
     }
