@@ -42,12 +42,17 @@ app.get("/api/exercise/users", function(req, res) {
 });
 
 // get exercise log
-app.get("/api/exercise/log/:userId:from:to:limit", function(req, res) {
+app.get("/api/exercise/log?", function(req, res) {
   let id = req.params.userId;
-  req.params.from ? let from = moment(req.params.from).format("dddd, MMMM Do YYYY, h:mm:ss a");
-  let to = moment(req.params.to).format("dddd, MMMM Do YYYY, h:mm:ss a");
+  let from = req.params.from ? moment(req.params.from).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
+  let to = req.params.to ? moment(req.params.to).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
   let limit = req.params.limit;
-  userModel.find({ _id: id}, function(err, user) {
+  userModel.find({
+    _id: id,
+    date: {$gt: from},
+    date: {$lt: to}  
+  }, 
+  function(err, user) {
     if (err) return console.error(err);
     res.json({_id: user._id, username: user.username, log: user.exerciseLog, count: user.exerciseCount });
   });
