@@ -70,13 +70,11 @@ app.post("/api/exercise/add", function(req, res) {
     }
     // format date using moment.js
     var momentDate = moment(exerciseDate).format("dddd, MMMM Do YYYY, h:mm:ss a");
-    console.log(momentDate); // DB
     // construct the exercise to be logged
     var newExercise = { description: req.body.description, duration: req.body.duration, date: momentDate };
-    user.exerciseCount = user.exerciseCount + 1;
-    user.exerciseLog = user.exerciseLog.push(newExercise);
-    console.log(user.exerciseCount);
-    console.log(user.exerciseLog);
+    user.exerciseCount++;
+    user.exerciseLog.push(newExercise);
+    user.save();
     res.json({ _id: user._id, username: user.username, description: newExercise.description, duration: newExercise.duration, date: newExercise.date  });
   });
 });
