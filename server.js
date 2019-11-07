@@ -55,7 +55,7 @@ app.post("/api/exercise/add", function(req, res) {
   console.dir(req.body);
   var exercise = req.body;
   var doc = userModel.findById(exercise._id);
-  console.log(doc)
+  console.log(doc.exerciseCount)
   doc.exerciseLog.push({ description: exercise.description, duration: exercise.duration, date: exercise.date })
   doc.exerciseCount = doc.exerciseCount + 1;
   res.json(exercise);
