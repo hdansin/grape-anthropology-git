@@ -43,10 +43,10 @@ app.get("/api/exercise/users", function(req, res) {
 
 // get exercise log
 app.get("/api/exercise/log?", function(req, res) {
-  let id = req.params.userId;
-  let from = req.params.from ? moment(req.params.from).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
-  let to = req.params.to ? moment(req.params.to).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
-  let limit = req.params.limit;
+  let id = req.query.userId;
+  let from = req.query.from ? moment(req.query.from).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
+  let to = req.query.to ? moment(req.query.to).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
+  let limit = req.query.limit;
   userModel.find({
     _id: id,
     date: {$gt: from},
