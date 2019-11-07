@@ -24,7 +24,8 @@ app.get("/", (req, res) => {
 // create schema and model for mongo docs
 var Schema = mongoose.Schema;
 var userSchema = new Schema({
-  username: String
+  username: String,
+  exerciseLog: Array
 });
 var userModel = mongoose.model("user", userSchema);
 
