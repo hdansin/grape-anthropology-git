@@ -55,10 +55,16 @@ app.post("/api/exercise/add", function(req, res) {
   console.dir(req.body);
   userModel.findById(req.body._id, function(err, user) {
     if (err) return console.error(err);
-    var newExercise = { description: req.body.description, duration: req.body.duration, date: req.body.date };
+    if (!req.body.date) {
+      var exerciseDate = new Date();
+    }
+    else {
+      var exerciseDate = new Date(req.body.date);
+    }
+    var newExercise = { description: req.body.description, duration: req.body.duration, date: exerciseDate };
     user.exerciseCount = user.exerciseCount + 1;
     user.exerciseLog = user.exerciseLog.push(newExercise);
-    res.json(_id: user._id, });
+    res.json({ _id: user._id, username: user.username, description: newExercise.description, duration: newExercise.duration, date: newExercise.date  });
   })
 
 })
