@@ -60,7 +60,13 @@ app.post("/api/exercise/add", function(req, res) {
       var exerciseDate = new Date();
     }
     else {
-      var exerciseDate = new Date(req.body.date);
+      if (exerciseDate.toUTCString() === "Invalid Date") {
+        console.log("Invalid Date, default to today");
+        var exerciseDate = new Date();
+      }
+      else {
+        var exerciseDate = new Date(req.body.date);
+      }
     }
     var newExercise = { description: req.body.description, duration: req.body.duration, date: exerciseDate };
     user.exerciseCount = user.exerciseCount + 1;
