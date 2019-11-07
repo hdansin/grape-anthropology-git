@@ -44,9 +44,11 @@ app.get("/api/exercise/users", function(req, res) {
 // get exercise log
 app.get("/api/exercise/log?", function(req, res) {
   let id = req.query.userId;
-  let from = req.query.from ? moment(req.query.from).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
-  let to = req.query.to ? moment(req.query.to).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
+  let from = req.query.from ? moment(new Date(req.query.from)).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
+  console.log(from) // DB
+  let to = req.query.to ? moment(new Date(req.query.to)).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
   let limit = req.query.limit;
+  // find by _id
   userModel.find({
     _id: id,
     date: {$gt: from},
@@ -54,6 +56,7 @@ app.get("/api/exercise/log?", function(req, res) {
   }, 
   function(err, user) {
     if (err) return console.error(err);
+    console.log(user)
     res.json({_id: user._id, username: user.username, log: user.exerciseLog, count: user.exerciseCount });
   });
 });
