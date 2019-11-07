@@ -50,13 +50,16 @@ app.get("/api/exercise/log?", function(req, res) {
   let limit = req.query.limit;
   // find by _id
   userModel.find({
-    _id: id,
-    date: {$gt: from},
-    date: {$lt: to}  
+    _id: id
   }, 
   function(err, user) {
     if (err) return console.error(err);
     console.log(user)
+    // filter exercise log by dates and push into array
+    let exerciseArr = [];
+    for (exercise in user.exerciseLog) {
+      
+    }
     res.json({_id: user._id, username: user.username, log: user.exerciseLog, count: user.exerciseCount });
   });
 });
