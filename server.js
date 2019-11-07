@@ -46,7 +46,7 @@ app.get("/api/exercise/log?", function(req, res) {
   let id = req.query.userId;
   let from = req.query.from ? moment(new Date(req.query.from)).format("X") : 0; // set to 0 if not specified 
   console.log(from) // DB
-  let to = req.query.to ? moment(new Date(req.query.to)).format("X") : moment().format("X");
+  let to = req.query.to ? moment(new Date(req.query.to)).format("X") : moment().format("X"); // set to now if not specified (b/c you cannot have an exercise in the future)
   console.log(to) //DB
   let limit = req.query.limit;
   // find by _id
@@ -63,7 +63,7 @@ app.get("/api/exercise/log?", function(req, res) {
         exerciseArr.push(exercise);
       }
     }
-    res.json({_id: user._id, username: user.username, log: user.exerciseLog, count: user.exerciseCount });
+    res.json({_id: user._id, username: user.username, log: exerciseArr, count: user.exerciseCount });
   });
 });
 
