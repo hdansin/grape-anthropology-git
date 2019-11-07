@@ -44,9 +44,10 @@ app.get("/api/exercise/users", function(req, res) {
 // get exercise log
 app.get("/api/exercise/log?", function(req, res) {
   let id = req.query.userId;
-  let from = req.query.from ? moment(new Date(req.query.from)).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
+  let from = req.query.from ? moment(new Date(req.query.from)).format("X") : 0; // set to 0 if not specified 
   console.log(from) // DB
-  let to = req.query.to ? moment(new Date(req.query.to)).format("dddd, MMMM Do YYYY, h:mm:ss a") : "";
+  let to = req.query.to ? moment(new Date(req.query.to)).format("X") : moment().format("X");
+  console.log(to) //DB
   let limit = req.query.limit;
   // find by _id
   userModel.find({
@@ -58,7 +59,9 @@ app.get("/api/exercise/log?", function(req, res) {
     // filter exercise log by dates and push into array
     let exerciseArr = [];
     for (exercise in user.exerciseLog) {
-      
+      if (exercise.date.toUTCString() > from && exercise.date.toUTCString() < to) {
+        exerciseArr.push(exercise);
+      }
     }
     res.json({_id: user._id, username: user.username, log: user.exerciseLog, count: user.exerciseCount });
   });
