@@ -35,7 +35,7 @@ var userModel = mongoose.model("user", userSchema);
 // get all users
 app.get("/api/exercise/users", function(req, res) {
   console.log("requesting users");
-  userModel.find({}, function (err, users) {
+  userModel.find({}, "_id, username", function (err, users) {
     if (err) return console.error(err);
     res.json(users);
   });
@@ -64,7 +64,7 @@ app.post("/api/exercise/add", function(req, res) {
     else {
       var exerciseDate = new Date(req.body.date);
       if (exerciseDate.toUTCString() === "Invalid Date") {
-        console.log("Invalid Date, default to today");
+        console.log("Invalid Date, default to today.");
         exerciseDate = new Date();
       }
     }
@@ -75,6 +75,8 @@ app.post("/api/exercise/add", function(req, res) {
     var newExercise = { description: req.body.description, duration: req.body.duration, date: momentDate };
     user.exerciseCount = user.exerciseCount + 1;
     user.exerciseLog = user.exerciseLog.push(newExercise);
+    console.log(user.exerciseCount);
+    console.log(user.exerciseLog);
     res.json({ _id: user._id, username: user.username, description: newExercise.description, duration: newExercise.duration, date: newExercise.date  });
   });
 });
