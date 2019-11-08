@@ -55,22 +55,19 @@ app.get("/api/exercise/log?", function(req, res) {
   }, 
   function(err, user) {
     if (err) return console.error(err);
-    console.log(user)
     // filter exercise log by dates and push into array
     let exerciseArr = [];
     for (exercise in user.exerciseLog) {
-      let exDate = user.exerciseLog[exercise].date;
-      console.log("from: " + from + " to: " + to)//DB
-      console.log("against: " + exDate)
+      let exDate = moment(user.exerciseLog[exercise].date, "X");
       if (user.exerciseLog[exercise].date > from && user.exerciseLog[exercise].date < to) {
         exerciseArr.push({ 
           description: user.exerciseLog[exercise].description,
           duration: user.exerciseLog[exercise].duration,
-          date: exDate
+          date: exDate.format("dddd, MMMM Do YYYY, h:mm a")
         });
       }
     }
-    console.log(exerciseArr)
+    console.log("getting log: " + exerciseArr);
     res.json({_id: user._id, username: user.username, log: exerciseArr, count: user.exerciseCount });
   });
 });
