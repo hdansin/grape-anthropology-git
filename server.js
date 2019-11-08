@@ -65,9 +65,8 @@ app.get("/api/exercise/log?", function(req, res) {
         exerciseArr.push({ 
           description: user.exerciseLog[exercise].description,
           duration: user.exerciseLog[exercise].duration,
-          date: moment.utc(user.exerciseLog[exercise].date).format("dddd, MMMM Do YYYY, h:mm a")
+          date: moment.utc(Number(user.exerciseLog[exercise].date)).format("dddd, MMMM Do YYYY, h:mm a")
         });
-        console.log(moment.utc(user.exerciseLog[exercise].date).format("dddd, MMMM Do YYYY, h:mm a"));//DB
       }
     }
     console.log(exerciseArr)
@@ -87,7 +86,7 @@ app.post("/api/exercise/new-user", function(req, res) {
 
 // post exercise to user
 app.post("/api/exercise/add", function(req, res) {
-  console.log("Adding exercise")
+  console.log("Adding exercise");
   console.dir(req.body);
   userModel.findById(req.body._id, function(err, user) {
     if (err) return console.error(err);
