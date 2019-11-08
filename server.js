@@ -61,8 +61,12 @@ app.get("/api/exercise/log?", function(req, res) {
     for (exercise in user.exerciseLog) {
       console.log("from: " + from + " to: " + to)//DB
       console.log("against: " + user.exerciseLog[exercise].date)//DB
-      if (user.exerciseLog[exercise].date.toUTCString() > from && user.exerciseLog[exercise].date.toUTCString() < to) {
-        exerciseArr.push(exercise);
+      if (user.exerciseLog[exercise].date > from && user.exerciseLog[exercise].date < to) {
+        exerciseArr.push({ 
+          description: user.exerciseLog[exercise].description,
+          duration: user.exerciseLog[exercise].duration,
+          date: moment(user.exerciseLog[exercise].date).format("dddd, MMMM Do YYYY, h:mm a"
+        });
       }
     }
     console.log(exerciseArr)
