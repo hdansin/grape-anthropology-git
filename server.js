@@ -98,7 +98,7 @@ app.post("/api/exercise/add", function(req, res) {
       }
     }
     // format date using moment.js
-    var momentDate = moment(exerciseDate).format("dddd, MMMM Do YYYY, h:mm:ss a");
+    var momentDate = moment(exerciseDate).format("X");
     // construct the exercise to be logged
     var newExercise = { description: req.body.description, duration: req.body.duration, date: momentDate };
     user.exerciseCount++;
