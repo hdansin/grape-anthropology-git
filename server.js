@@ -65,8 +65,9 @@ app.get("/api/exercise/log?", function(req, res) {
         exerciseArr.push({ 
           description: user.exerciseLog[exercise].description,
           duration: user.exerciseLog[exercise].duration,
-          date: moment(user.exerciseLog[exercise].date).format("dddd, MMMM Do YYYY, h:mm a"
+          date: moment.utc(user.exerciseLog[exercise].date).format("dddd, MMMM Do YYYY, h:mm a")
         });
+        console.log(moment.utc(user.exerciseLog[exercise].date).format("dddd, MMMM Do YYYY, h:mm a"));//DB
       }
     }
     console.log(exerciseArr)
