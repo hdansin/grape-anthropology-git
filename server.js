@@ -59,14 +59,14 @@ app.get("/api/exercise/log?", function(req, res) {
     // filter exercise log by dates and push into array
     let exerciseArr = [];
     for (exercise in user.exerciseLog) {
-      let exDate = moment.utc(Number(user.exerciseLog[exercise].date));
+      let exDate = user.exerciseLog[exercise].date;
       console.log("from: " + from + " to: " + to)//DB
       console.log("against: " + exDate)
       if (user.exerciseLog[exercise].date > from && user.exerciseLog[exercise].date < to) {
         exerciseArr.push({ 
           description: user.exerciseLog[exercise].description,
           duration: user.exerciseLog[exercise].duration,
-          date: moment.utc(Number(user.exerciseLog[exercise].date))
+          date: exDate
         });
       }
     }
