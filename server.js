@@ -45,10 +45,8 @@ app.get("/api/exercise/users", function(req, res) {
 app.get("/api/exercise/log?", function(req, res) {
   let id = req.query.userId;
   let from = req.query.from ? moment(new Date(req.query.from)).format("X") : 0; // set to 0 if not specified 
-  console.log(from) // DB
   let to = req.query.to ? moment(new Date(req.query.to)).format("X") : moment().format("X"); // set to now if not specified (b/c you cannot have an exercise in the future)
-  console.log(to) //DB
-  let limit = req.query.limit;
+  let limit = req.query.limit ? req.query.limit : 0; // 
   // find by _id
   userModel.findOne({
     _id: id
@@ -57,7 +55,10 @@ app.get("/api/exercise/log?", function(req, res) {
     if (err) return console.error(err);
     // filter exercise log by dates and push into array
     let exerciseArr = [];
-    for (exercise in user.exerciseLog) {
+    if (! limit) {
+      limit = user.exerciseLog.length;
+    }
+    for (let exercise = 0; exercise < limit; exercise++) {
       let exDate = moment(user.exerciseLog[exercise].date, "X");
       if (user.exerciseLog[exercise].date > from && user.exerciseLog[exercise].date < to) {
         exerciseArr.push({ 
@@ -74,7 +75,7 @@ app.get("/api/exercise/log?", function(req, res) {
 
 // post new user
 app.post("/api/exercise/new-user", function(req, res) {
-  var newUser = new userModel({username: req.body.username, exerciseLog: [], exerciseCount: 0});
+  var newUser = new userModel({ username: req.body.username, exerciseLog: [], exerciseCount: 0 });
   newUser.save(function (err, newUser) {
     if (err) return console.error(err);
   });
