@@ -46,7 +46,7 @@ app.get("/api/exercise/log?", function(req, res) {
   let id = req.query.userId;
   let from = req.query.from ? moment(new Date(req.query.from)).format("X") : 0; // set to 0 if not specified 
   let to = req.query.to ? moment(new Date(req.query.to)).format("X") : moment().format("X"); // set to now if not specified (b/c you cannot have an exercise in the future)
-  let limit = req.query.limit ? req.query.limit : 0; // 
+  let limit = req.query.limit ? req.query.limit : 0; // handled on line 9
   // find by _id
   userModel.findOne({
     _id: id
@@ -56,7 +56,7 @@ app.get("/api/exercise/log?", function(req, res) {
     // filter exercise log by dates and push into array
     let exerciseArr = [];
     if (! limit) {
-      limit = user.exerciseLog.length;
+      limit = user.exerciseLog.length; // set to log length if no limit set
     }
     for (let exercise = 0; exercise < limit; exercise++) {
       let exDate = moment(user.exerciseLog[exercise].date, "X");
